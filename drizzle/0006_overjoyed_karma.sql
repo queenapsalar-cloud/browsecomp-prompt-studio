@@ -1,0 +1,1 @@
+ALTER TABLE `prompt_families` ADD `tags` text DEFAULT '' NOT NULL;
