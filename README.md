@@ -70,4 +70,4 @@ Pull changes from the template into your repository, review them, and run `npm r
 
 ## License
 
-This software is licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE). Noncommercial use, modification, and redistribution are permitted under its terms. Commercial use is not licensed.
+This software is licensed under the [PolyForm Perimeter License 1.0.0](LICENSE). Professional, commercial, modification, and redistribution uses are permitted under its terms, except for providing others with a product that competes with this software.
