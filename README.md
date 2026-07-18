@@ -2,63 +2,85 @@
 
 A private-by-design prompt workspace for maintaining canonical prompts, project-specific variants, source URLs, logic traces, submissions, archives, and LLM pass/fail test records.
 
-Each deployment uses its own Cloudflare D1 database. A fresh installation contains one project named **Sample** and no prompts, variants, URLs, submissions, or model-test records.
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/queenapsalar-cloud/browsecomp-prompt-studio)
 
-## What you need
+## Install your independent copy
 
-- A GitHub account
-- A Cloudflare account
-- Node.js 22.13 or newer
+Select **Deploy to Cloudflare** above, then:
 
-## Create your independent copy
+1. Sign in to Cloudflare and GitHub when prompted.
+2. Choose the GitHub repository name and Cloudflare Worker name for your copy.
+3. Accept the displayed configuration and select **Deploy**.
+4. Wait for the build to finish, then open the new `workers.dev` URL.
 
-1. Select **Use this template** on GitHub, then **Create a new repository**.
-2. Clone your new repository to your computer.
-3. In the project folder, run:
+Cloudflare copies the source into the installer’s GitHub account, creates and binds a separate D1 database, deploys the application, and enables automatic deployments from future repository changes. No terminal, local Node.js installation, or manually copied database ID is required.
+
+A fresh installation contains:
+
+- One project named **Sample**
+- No prompts or variants
+- No source URLs
+- No submissions or archives
+- No LLM test records
+
+## Protect the website before adding prompts
+
+A new `workers.dev` URL is public until its owner enables access protection:
+
+1. Open the [Cloudflare dashboard](https://dash.cloudflare.com/).
+2. Go to **Workers & Pages** and select the new Worker.
+3. Open **Settings → Domains & Routes**.
+4. Beside the `workers.dev` route, select **Enable Cloudflare Access**.
+5. Choose **Manage Cloudflare Access** and allow only the owner’s email address or intended users.
+
+Do this before storing sensitive prompt material.
+
+## Use and update the website
+
+After deployment, ordinary use happens entirely through the new website URL. Each installation and database is independent.
+
+Cloudflare Workers Builds watches the copied GitHub repository. Pushing a change to its production branch automatically rebuilds and deploys the website. Pull requests can receive preview deployments.
+
+## Manual installation fallback
+
+For users who prefer terminal-based deployment:
+
+1. Clone the repository and install dependencies:
 
    ```bash
+   git clone https://github.com/YOUR-USERNAME/browsecomp-prompt-studio.git
+   cd browsecomp-prompt-studio
    npm install
+   ```
+
+2. Authorize Cloudflare and create a D1 database:
+
+   ```bash
    npx wrangler login
    npx wrangler d1 create browsecomp-prompt-studio
    ```
 
-4. Copy the `database_id` printed by Cloudflare.
-5. Set it before deploying.
-
-   macOS or Linux:
+3. Replace the placeholder `database_id` in `wrangler.jsonc` with the ID printed by Cloudflare.
+4. Deploy:
 
    ```bash
-   export CLOUDFLARE_D1_DATABASE_ID="your-database-id"
    npm run deploy
    ```
 
-   Windows PowerShell:
-
-   ```powershell
-   $env:CLOUDFLARE_D1_DATABASE_ID="your-database-id"
-   npm run deploy
-   ```
-
-6. Open the URL printed after deployment. The first request creates the required tables and the Sample project automatically.
+The application creates its tables and Sample project on first use.
 
 ## Local development
-
-Copy `.env.example` to `.env.local`, replace the placeholder database ID if needed, then run:
 
 ```bash
 npm install
 npm run dev
 ```
 
-## Privacy and access
+Local development uses a local D1 database managed by Wrangler. Real deployment data remains in the remote database.
 
-Each installation has a separate D1 database; users do not share prompt data. A newly deployed Cloudflare Worker is reachable through its URL unless the owner adds an access policy. For a private installation, protect it with Cloudflare Access before storing sensitive prompts.
+## Privacy
 
-Never commit `.env` files, API tokens, database exports, or real prompt data. This template intentionally excludes the original developer's hosting identifiers and database contents.
-
-## Updating the application
-
-Pull changes from the template into your repository, review them, and run `npm run deploy` again with your D1 database ID set. Existing records remain in your database.
+Each installation uses its own D1 database; users do not share prompt data. Never commit `.env` files, API tokens, database exports, or real prompt data. This template excludes the original developer’s hosting identifiers and database contents.
 
 ## Available commands
 
