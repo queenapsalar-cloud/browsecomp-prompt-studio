@@ -1,0 +1,1 @@
+ALTER TABLE `variants` ADD `prompt_urls` text DEFAULT '' NOT NULL;
