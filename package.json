@@ -39,5 +39,12 @@
     "wrangler": "4.92.0"
   },
   "type": "module",
-  "displayName": "BrowseComp Prompt Studio"
+  "displayName": "BrowseComp Prompt Studio",
+  "cloudflare": {
+    "bindings": {
+      "DB": {
+        "description": "A private D1 database for this installation's projects, prompts, variants, URLs, submissions, archives, and model-test records. Cloudflare creates it automatically."
+      }
+    }
+  }
 }
