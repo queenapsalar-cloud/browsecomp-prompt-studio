@@ -1,24 +1,8 @@
 import vinext from "vinext";
 import { defineConfig } from "vite";
 
-const PLACEHOLDER_DATABASE_ID =
-  "00000000-0000-4000-8000-000000000000";
-
 // macOS Seatbelt blocks FSEvents, so Codex previews need polling for HMR.
 const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === "seatbelt";
-
-const localBindingConfig = {
-  main: "./worker/index.ts",
-  compatibility_flags: ["nodejs_compat"],
-  d1_databases: [
-    {
-      binding: "DB",
-      database_name: process.env.CLOUDFLARE_D1_DATABASE_NAME ?? "browsecomp-prompt-studio",
-      database_id: process.env.CLOUDFLARE_D1_DATABASE_ID ?? PLACEHOLDER_DATABASE_ID,
-    },
-  ],
-  r2_buckets: [],
-};
 
 export default defineConfig(async () => {
   // Keep Wrangler and Miniflare state project-local. These are non-secret tool
@@ -41,9 +25,9 @@ export default defineConfig(async () => {
     plugins: [
       vinext(),
       cloudflare({
+        configPath: "./wrangler.jsonc",
         viteEnvironment: { name: "rsc", childEnvironments: ["ssr"] },
         inspectorPort: false,
-        config: localBindingConfig,
       }),
     ],
   };
