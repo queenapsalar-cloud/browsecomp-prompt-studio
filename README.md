@@ -70,4 +70,4 @@ Pull changes from the template into your repository, review them, and run `npm r
 
 ## License
 
-No open-source license has been selected yet. The repository owner should choose a license before making the template public.
+This software is licensed under the [PolyForm Noncommercial License 1.0.0](LICENSE). Noncommercial use, modification, and redistribution are permitted under its terms. Commercial use is not licensed.
